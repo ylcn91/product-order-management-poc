@@ -1,4 +1,3 @@
-// src/main/java/com/doksanbir/productordermanagementpoc/domain/model/Product.java
 package com.doksanbir.productordermanagementpoc.domain;
 
 import com.doksanbir.productordermanagementpoc.shared.BaseEntity;

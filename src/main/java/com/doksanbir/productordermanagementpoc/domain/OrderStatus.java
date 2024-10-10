@@ -1,4 +1,3 @@
-// src/main/java/com/doksanbir/productordermanagementpoc/domain/model/OrderStatus.java
 package com.doksanbir.productordermanagementpoc.domain;
 
 /**
