@@ -14,6 +14,10 @@ import java.util.List;
 
 /**
  * Service implementation for product-related use cases.
+ * <p>
+ * This class implements multiple use cases related to product management, including
+ * creating, retrieving, updating, deleting, listing, stock adjustment, and searching
+ * for products.
  */
 @Service
 @RequiredArgsConstructor
@@ -29,12 +33,18 @@ public class ProductService implements
 
     private final ProductRepositoryPort productRepositoryPort;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Product createProduct(Product product) {
         log.info("Creating product: {}", product.getName());
         return productRepositoryPort.save(product);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Product retrieveProduct(Long productId) {
         log.info("Retrieving product with ID: {}", productId);
@@ -42,6 +52,9 @@ public class ProductService implements
                 .orElseThrow(() -> new ProductNotFoundException(productId));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Product updateProduct(Product product) {
         log.info("Updating product with ID: {}", product.getId());
@@ -50,23 +63,31 @@ public class ProductService implements
         existingProduct.setDescription(product.getDescription());
         existingProduct.setPrice(product.getPrice());
         existingProduct.setCategory(product.getCategory());
-        // Note: stockQuantity should be adjusted via adjustStockUseCase
         return productRepositoryPort.save(existingProduct);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteProduct(Long productId) {
         log.info("Deleting product with ID: {}", productId);
-        retrieveProduct(productId); // Ensure product exists before deletion
+        retrieveProduct(productId);
         productRepositoryPort.deleteById(productId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Product> listProducts() {
         log.info("Listing all products");
         return productRepositoryPort.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void adjustStock(Long productId, int quantity) {
         log.info("Adjusting stock for product ID: {} by {}", productId, quantity);
@@ -75,6 +96,10 @@ public class ProductService implements
         productRepositoryPort.save(product);
     }
 
+    /**
+     * {@inheritDoc}
+     * Additionally, performs a product search using the Specification Pattern.
+     */
     @Override
     public List<Product> searchProducts(String name, String category) {
         log.info("Searching products with name: {} and category: {}", name, category);

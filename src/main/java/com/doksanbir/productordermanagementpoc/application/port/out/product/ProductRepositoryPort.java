@@ -8,6 +8,7 @@ import java.util.Optional;
 
 /**
  * Repository port interface for product persistence operations.
+ * Provides abstract methods for handling product-related database operations.
  */
 public interface ProductRepositoryPort {
     /**

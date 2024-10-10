@@ -17,6 +17,10 @@ import java.util.Map;
 
 /**
  * Service implementation for order-related use cases.
+ * <p>
+ * This class implements multiple use cases related to order management, including
+ * creating, retrieving, updating, deleting, listing, searching, and advanced searching
+ * for orders. The Strategy Pattern is used to process orders based on their current status.
  */
 @Service
 @RequiredArgsConstructor
@@ -28,11 +32,15 @@ public class OrderService implements
         DeleteOrderUseCase,
         ListOrdersUseCase,
         SearchOrdersUseCase,
-        AdvancedSearchOrdersUseCase { // Implement the new interface
+        AdvancedSearchOrdersUseCase {
 
     private final OrderRepositoryPort orderRepositoryPort;
     private final Map<OrderStatus, OrderProcessingStrategy> orderProcessingStrategies;
 
+    /**
+     * {@inheritDoc}
+     * Additionally, the order is processed based on its status using the Strategy Pattern.
+     */
     @Override
     public Order createOrder(Order order) {
         log.info("Creating order for product ID: {}", order.getProduct().getId());
@@ -42,6 +50,9 @@ public class OrderService implements
         return savedOrder;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Order retrieveOrder(Long orderId) {
         log.info("Retrieving order with ID: {}", orderId);
@@ -49,6 +60,9 @@ public class OrderService implements
                 .orElseThrow(() -> new OrderNotFoundException(orderId));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Order updateOrder(Order order) {
         log.info("Updating order with ID: {}", order.getId());
@@ -61,6 +75,9 @@ public class OrderService implements
         return updatedOrder;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteOrder(Long orderId) {
         log.info("Deleting order with ID: {}", orderId);
@@ -68,12 +85,18 @@ public class OrderService implements
         orderRepositoryPort.deleteById(orderId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Order> listOrders() {
         log.info("Listing all orders");
         return orderRepositoryPort.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Order> searchOrders(OrderStatus status) {
         log.info("Searching orders with status: {}", status);
@@ -86,6 +109,8 @@ public class OrderService implements
 
     /**
      * Processes the order based on its current status using the Strategy Pattern.
+     * The processing strategy is chosen based on the order's status, and the order is saved
+     * again after processing.
      *
      * @param order the order to process
      */
@@ -101,11 +126,8 @@ public class OrderService implements
     }
 
     /**
-     * Advanced search using Specification Pattern.
-     *
-     * @param status     the status of the order (optional)
-     * @param productId  the ID of the product (optional)
-     * @return the list of matching orders
+     * {@inheritDoc}
+     * Additionally, performs an advanced search using the Specification Pattern.
      */
     @Override
     public List<Order> advancedSearchOrders(OrderStatus status, Long productId) {

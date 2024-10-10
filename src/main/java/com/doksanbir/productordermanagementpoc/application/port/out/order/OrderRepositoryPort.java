@@ -9,6 +9,7 @@ import java.util.Optional;
 
 /**
  * Repository port interface for order persistence operations.
+ * Provides abstract methods for handling order-related database operations.
  */
 public interface OrderRepositoryPort {
     /**
