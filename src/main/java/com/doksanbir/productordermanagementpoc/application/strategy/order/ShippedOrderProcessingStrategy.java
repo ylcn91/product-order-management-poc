@@ -18,6 +18,9 @@ public class ShippedOrderProcessingStrategy implements OrderProcessingStrategy {
         order.setStatus(OrderStatus.DELIVERED);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public OrderStatus getHandledStatus() {
         return OrderStatus.SHIPPED;

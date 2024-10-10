@@ -10,16 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Configuration class for Order Processing Strategies.
+ * Configuration class for managing Order Processing Strategies.
+ * <p>
+ * This class defines a bean that provides a mapping between {@link OrderStatus}
+ * and corresponding {@link OrderProcessingStrategy} implementations. The strategies
+ * are automatically injected into the map based on the available Spring-managed beans.
  */
 @Configuration
 public class OrderProcessingConfig {
 
     /**
-     * Creates a map of OrderStatus to OrderProcessingStrategy.
+     * Creates a map of {@link OrderStatus} to {@link OrderProcessingStrategy}.
+     * <p>
+     * This map is used to dynamically assign the appropriate processing strategy
+     * to an order based on its current status.
      *
-     * @param strategies the list of available OrderProcessingStrategy beans
-     * @return a map associating each OrderStatus with its strategy
+     * @param strategies the list of available {@link OrderProcessingStrategy} beans
+     * @return a map associating each {@link OrderStatus} with its processing strategy
      */
     @Bean
     public Map<OrderStatus, OrderProcessingStrategy> orderProcessingStrategies(List<OrderProcessingStrategy> strategies) {

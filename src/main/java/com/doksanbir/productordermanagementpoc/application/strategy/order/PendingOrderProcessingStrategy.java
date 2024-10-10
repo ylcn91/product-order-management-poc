@@ -18,6 +18,9 @@ public class PendingOrderProcessingStrategy implements OrderProcessingStrategy {
         order.setStatus(OrderStatus.CONFIRMED);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public OrderStatus getHandledStatus() {
         return OrderStatus.PENDING;

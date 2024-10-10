@@ -18,6 +18,9 @@ public class ConfirmedOrderProcessingStrategy implements OrderProcessingStrategy
         order.setStatus(OrderStatus.SHIPPED);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public OrderStatus getHandledStatus() {
         return OrderStatus.CONFIRMED;
